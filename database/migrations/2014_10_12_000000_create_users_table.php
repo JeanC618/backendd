@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('email', 100)->unique(); // Cambia el tamaño del campo 'email'
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('rol_id')->constrained('rol')->onUpdate('cascade')->nullable()->onDelete('set null');
-            $table->string('phone', 15)->nullable();
+            $table->string('phone', 20)->nullable();
             $table->date('birthdate');
+            $table->string('country', 30)->nullable();
+            $table->string('city', 30)->nullable();
             $table->string('urlPhoto')->nullable();
             $table->string('password');
             $table->rememberToken();

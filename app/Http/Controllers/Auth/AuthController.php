@@ -23,8 +23,12 @@ class AuthController extends Controller
             'rol_id' => $request->rol_id, // Debe ser validado como existente en la tabla 'rol'
             'phone' => $request->phone,
             'birthdate' => $request->birthdate,
+            'country' => $request->country,
+            'city' => $request->city,
             'urlPhoto' => $request->urlPhoto,
             'password' => bcrypt($request->password), // Contraseña encriptada
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         // Generar el token JWT

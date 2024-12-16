@@ -118,11 +118,23 @@ Route::middleware(['jwt.verify'])->group(function() {
             ->with('category') // Obtener la categoría asociada
             ->get();
     });
+
+    Route::get('/companiesbyIdAll', function () {
+        $user = auth()->user(); // Obtener el usuario autenticado
+        return Company::where('user_id', $user->id) // Filtrar las compañías por el ID del usuario autenticado
+            ->with('category') // Obtener la categoría asociada
+            ->get();
+    });
     
 
     Route::get('/shifts/me', [ShiftController::class, 'getShiftsByUserCompany']);
 
     Route::get('/myshifts', [ShiftController::class, 'getAuthenticatedUserShifts']);
+
+    Route::get('/company/{id}', [CompanyController::class, 'show']);
+    // Ruta PUT para actualizar la compañía
+    Route::put('/company/{id}', [CompanyController::class, 'update']);
+
 
     // Ruta para obtener categorías
     Route::get('/categories', function () {
