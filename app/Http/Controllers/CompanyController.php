@@ -80,5 +80,38 @@ class CompanyController extends Controller
         return response()->json(['message' => 'Company updated successfully', 'company' => $company]);
     }
 
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'desc' => 'nullable|string|max:255',
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:category,id',
+            'country' => 'required|string|max:100',
+            'city' => 'required|string|max:100',
+            'street1' => 'required|string|max:255',
+            'street2' => 'nullable|string|max:255',
+            'street3' => 'nullable|string|max:255',
+            'state' => 'required|string|max:255',
+            'urlPhoto' => 'nullable|string|max:255',
+        ]);
+
+        try {
+            $company = Company::create(array_merge($validated, [
+                'popularidad' => 0,
+            ]));
+
+            return response()->json([
+                'message' => 'Compañía creada exitosamente.',
+                'data' => $company,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al crear la compañía.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
 }
 

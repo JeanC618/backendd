@@ -140,4 +140,6 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/categories', function () {
         return \App\Models\Category::all();
     });
+
+    Route::post('/addcompany', [CompanyController::class, 'store']);
 });
